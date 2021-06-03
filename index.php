@@ -17,69 +17,76 @@ $stmt->execute();
 
 $produkt = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <title>Eshop-zaverecna_prace</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
+
 <body>
 
-<?php include 'navbar.php' ?>
+    <?php include 'navbar.php' ?>
 
-<h1>Eshop-zaverecna_prace</h1>
+    <h1>Eshop-zaverecna_prace</h1>
 
-Počet produktů: <strong><?php echo $count;?></strong>
-
-
-<? if (($currentUser['role']=='admin')): ?>
-    <br/><br/>
-    <a href="novy_produkt.php">Nový produkt</a>
-    <br/><br/>
-<? else: ?>
-    <br/><br/>
-    <br/><br/>
-<? endif; ?>
+    Počet produktů: <strong><?php echo $count; ?></strong>
 
 
+    <? if (($currentUser['role'] == 'admin')) : ?>
+        <br /><br />
+        <a href="novy_produkt.php">Nový produkt</a>
+        <br /><br />
+    <? else : ?>
+        <br /><br />
+        <br /><br />
+    <? endif; ?>
 
-<?php if ($count>0){ ?>
-    <table>
-        <tr>
-            <th></th>
-            <th></th>
-            <th>Název</th>
-            <th>Popis</th>
-            <th>Cena</th>
-            <th>Vyrobce</th>
-        </tr>
 
-        <?php foreach($produkt as $row){ ?>
+
+    <?php if ($count > 0) { ?>
+        <table>
             <tr>
-                <td class="center">
-                    <a href='pridej.php?produkt_id=<?php echo $row['produkt_id']; ?>'>Přidat do košíku</a>
-                </td>
-                <td class="center">
-                    <a href='detail.php?produkt_id=<?php echo $row['produkt_id']; ?>'>Detail</a>
-                </td>
-                <td><?php echo htmlspecialchars($row['nazev_produkt']);  ?></td>
-                <td><?php echo htmlspecialchars($row['popis_produkt']); ?></td>
-                <td class="right"><?php echo $row['cena']; ?></td>
-                <td><?php echo htmlspecialchars($row['nazev_vyrobce']); ?></td>
+                <th></th>
+                <th></th>
+                <th>Název</th>
+                <th>Popis</th>
+                <th>Cena</th>
+                <th>Vyrobce</th>
             </tr>
-        <?php } ?>
-    </table>
-    <br/>
-    <div class="pagination">
-        <?php
-        for($i=1; $i<=ceil($count/5); $i++){
-            echo '<a class="'.($offset/5+1==$i?'active':'').'" href="index.php?offset='.(($i-1)*5).'">'.$i.'</a>';
-        }
-        ?>
-    </div>
-<?php } ?>
+
+            <?php foreach ($produkt as $row) { ?>
+                <tr>
+                    <td class="center">
+                        <form action="pridej.php" method="GET">
+                            <input type="number" name="quantity" value="1" min="1">
+                            <input type="hidden" name="produkt_id" value="<?= $row["produkt_id"] ?>">
+                            <input type="submit" value="Přidej do košíku">
+                        </form>
+                    </td>
+                    <td class="center">
+                        <a href='detail.php?produkt_id=<?php echo $row['produkt_id']; ?>'>Detail</a>
+                    </td>
+                    <td><?php echo htmlspecialchars($row['nazev_produkt']);  ?></td>
+                    <td><?php echo htmlspecialchars($row['popis_produkt']); ?></td>
+                    <td class="right"><?php echo $row['cena']; ?></td>
+                    <td><?php echo htmlspecialchars($row['nazev_vyrobce']); ?></td>
+                </tr>
+            <?php } ?>
+        </table>
+        <br />
+        <div class="pagination">
+            <?php
+            for ($i = 1; $i <= ceil($count / 5); $i++) {
+                echo '<a class="' . ($offset / 5 + 1 == $i ? 'active' : '') . '" href="index.php?offset=' . (($i - 1) * 5) . '">' . $i . '</a>';
+            }
+            ?>
+        </div>
+    <?php } ?>
 
 </body>
-</html>
 
+</html>
