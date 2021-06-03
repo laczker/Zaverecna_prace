@@ -16,13 +16,26 @@ if (!$goods) {
 }
 
 // $_SESSION['kosik'][] = $goods["produkt_id"];
+$priceUpdate = 0;
 $quantity = htmlspecialchars($_GET["quantity"]);
-if (isset($_SESSION['kosik'][$goods['produkt_id']]) && $quantity > $_SESSION['kosik'][$goods["produkt_id"]]['quantity']) {
+if (isset($_SESSION['kosik'][$goods['produkt_id']]) && !isset($_GET['change'])) {
     $old_quantity = intval($_SESSION['kosik'][$goods["produkt_id"]]['quantity']);
     $_SESSION['kosik'][$goods["produkt_id"]] = ["quantity" => intval($quantity) + $old_quantity];
-} else {
+    $priceUpdate = intval($_SESSION['kosik'][$goods["produkt_id"]]['quantity']) * intval($goods['cena'])
+        - $old_quantity * intval($goods['cena']);
+} else if (isset($_SESSION['kosik'][$goods['produkt_id']]) && isset($_GET['change'])) {
+    $old_quantity = intval($_SESSION['kosik'][$goods["produkt_id"]]['quantity']);
     $_SESSION['kosik'][$goods["produkt_id"]] = ["quantity" => $quantity]; //přidání ID zboží do košíku
-
+    $priceUpdate = intval($_SESSION['kosik'][$goods["produkt_id"]]['quantity']) * intval($goods['cena'])
+        - $old_quantity * intval($goods['cena']);;
+} else {
+    $_SESSION['kosik'][$goods["produkt_id"]] = ["quantity" => $quantity, "jednotkova_cena" => $goods['cena']];
+    $priceUpdate = intval($_SESSION['kosik'][$goods["produkt_id"]]['quantity']) * intval($goods['cena']);
+}
+if (!isset($_SESSION["totalPrice"])) {
+    $_SESSION['totalPrice'] = $priceUpdate;
+} else {
+    $_SESSION['totalPrice'] = intval($_SESSION['totalPrice']) + $priceUpdate;
 }
 $totalGoods = 0;
 foreach ($_SESSION['kosik'] as $key => $value) {

@@ -7,6 +7,8 @@ $id = $_GET['produkt_id'];
 foreach ($_SESSION['kosik'] as $key => $value) {
     if ($key == $id) {
         $_SESSION["total"] -= intval($_SESSION['kosik'][$key]['quantity']);
+        $_SESSION['totalPrice'] -= (intval($_SESSION['kosik'][$key]['jednotkova_cena'])
+            * intval($_SESSION['kosik'][$key]['quantity']));
         unset($_SESSION['kosik'][$key]);
     }
 }

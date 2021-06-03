@@ -71,6 +71,7 @@ if (is_array($ids) && count($ids) > 0) {
                     <form action="pridej.php" method="GET">
                     <input type="number" name="quantity" id="quantity" min="1" value="' . $_SESSION["kosik"][$good['produkt_id']]["quantity"] . '">
                     <input name="produkt_id" type="hidden" value="' . $good['produkt_id'] . '" />
+                    <input name="change" type="hidden" value="" />
                     <input type="submit" value="Změnit" />
                  </form>
                     </td>
@@ -82,11 +83,13 @@ if (is_array($ids) && count($ids) > 0) {
                   <tr>
                     <td>Celková Cena</td>
                     <td></td>
-                    <td class="right">' . $sum . '</td>
+                    <td class="right">' . $_SESSION['totalPrice'] . '</td>
                     <td></td>
                   </tr>
                 </tfoot>                
               </table>';
+
+    echo "<a href='nakup.php'> Objednat </a>";
   } else {
     echo 'Žádné zboží v košíku';
   }
