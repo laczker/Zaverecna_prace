@@ -11,12 +11,13 @@ if (isset($_GET['offset'])) {
 $count = $db->query("SELECT COUNT(produkt_id) FROM produkt")->fetchColumn();
 
 if (!empty($_GET['kategorie'])) {
-    $stmt = $db->prepare("SELECT *,  vyrobce.nazev AS nazev_vyrobce, produkt.nazev AS nazev_produkt, produkt.popis AS popis_produkt, kategorie.nazev AS nazev_kategorie FROM produkt JOIN vyrobce USING (vyrobce_id) JOIN kategorie USING (kategorie_id) WHERE produkt.kategorie_id=:kategorie ORDER BY produkt_id DESC LIMIT 5 OFFSET " . $offset);
-    //$stmt->bindValue(1, $offset, PDO::PARAM_INT);
-    $stmt->execute([':kategorie' => $_GET['kategorie']]);
+    $stmt = $db->prepare("SELECT *,  vyrobce.nazev AS nazev_vyrobce, produkt.nazev AS nazev_produkt, produkt.popis AS popis_produkt, kategorie.nazev AS nazev_kategorie FROM produkt JOIN vyrobce USING (vyrobce_id) JOIN kategorie USING (kategorie_id) WHERE produkt.kategorie_id=? ORDER BY produkt_id DESC LIMIT 5 OFFSET ? ");
+    $stmt->bindValue(2, $offset, PDO::PARAM_INT);
+    $stmt->bindValue(1, $_GET['kategorie'], PDO::PARAM_INT);
+    $stmt->execute();
 } else {
-    $stmt = $db->prepare('SELECT *,   vyrobce.nazev AS nazev_vyrobce, produkt.nazev AS nazev_produkt, produkt.popis AS popis_produkt, kategorie.nazev AS nazev_kategorie FROM produkt JOIN vyrobce USING (vyrobce_id) JOIN kategorie USING (kategorie_id) ORDER BY produkt_id DESC LIMIT 5 OFFSET ' . $offset);
-    //$stmt->bindValue(1, $offset, PDO::PARAM_INT);
+    $stmt = $db->prepare('SELECT *,   vyrobce.nazev AS nazev_vyrobce, produkt.nazev AS nazev_produkt, produkt.popis AS popis_produkt, kategorie.nazev AS nazev_kategorie FROM produkt JOIN vyrobce USING (vyrobce_id) JOIN kategorie USING (kategorie_id) ORDER BY produkt_id DESC LIMIT 5 OFFSET ?');
+    $stmt->bindValue(1, $offset, PDO::PARAM_INT);
     $stmt->execute();
 }
 $produkt = $stmt->fetchAll(PDO::FETCH_ASSOC);
