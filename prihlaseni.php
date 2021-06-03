@@ -41,7 +41,7 @@ if (!empty($formError)){
     <input type="text" name="email" id="email" value="<?php echo htmlspecialchars(@$_POST['email'])?>"><br/><br/>
 
     <label for="heslo">heslo</label><br/>
-    <input type="password" name="heslo" id="password" value=""><br/><br/>
+    <input type="password" name="heslo" id="heslo" value=""><br/><br/>
 
     <input type="submit" value="Sign in">
 </form>

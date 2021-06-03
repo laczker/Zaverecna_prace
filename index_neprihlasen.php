@@ -62,6 +62,7 @@ foreach ($ktg as $kategorie){
 <?php if ($count>0){ ?>
     <table>
         <tr>
+            <th></th>
             <th>Název</th>
             <th>Popis</th>
             <th>Cena</th>
@@ -70,6 +71,9 @@ foreach ($ktg as $kategorie){
 
         <?php foreach($produkt as $row){ ?>
             <tr>
+                <td class="center">
+                    <a href='detail.php?produkt_id=<?php echo $row['produkt_id']; ?>'>Detail</a>
+                </td>
                 <td><?php echo htmlspecialchars($row['nazev_produkt']); ?></td>
                 <td><?php echo htmlspecialchars($row['popis_produkt']); ?></td>
                 <td class="right"><?php echo $row['cena']; ?></td>

@@ -25,7 +25,14 @@ $parametry=$goods['parametry'];
 </head>
 <body>
 
-<?php include 'navbar.php' ?>
+<?php
+if(empty($currentUser)){
+    include 'navbar_neprihlasen.php';
+}
+else{
+    include 'navbar.php';
+}
+?>
 
 <h1>Detail produktu</h1>
 

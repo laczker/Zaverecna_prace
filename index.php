@@ -53,7 +53,6 @@ Počet produktů: <strong><?php echo $count;?></strong>
             <th>Popis</th>
             <th>Cena</th>
             <th>Vyrobce</th>
-            <th></th>
         </tr>
 
         <?php foreach($produkt as $row){ ?>
@@ -68,11 +67,6 @@ Počet produktů: <strong><?php echo $count;?></strong>
                 <td><?php echo htmlspecialchars($row['popis_produkt']); ?></td>
                 <td class="right"><?php echo $row['cena']; ?></td>
                 <td><?php echo htmlspecialchars($row['nazev_vyrobce']); ?></td>
-
-                <td class="center">
-                    <a href='uprav.php?produkt_id=<?php echo $row['produkt_id']; ?>'>Upravit</a> |
-                    <a href='odstran_produkt.php?produkt_id=<?php echo $row['produkt_id']; ?>'>Odstranit</a>
-                </td>
             </tr>
         <?php } ?>
     </table>

@@ -6,7 +6,7 @@
 
     </div>
     <div style="float: right">
-        Přihlášený uživatel <?php echo htmlspecialchars($currentUser['email']); ?> |
+        Přihlášený uživatel: <?php echo htmlspecialchars($currentUser['email']); ?> |
         <a href="odhlaseni.php">Odhlásit</a>
     </div>
 </div>

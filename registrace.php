@@ -40,7 +40,7 @@ if (!empty($_POST)) {
     <input type="text" name="email" id="email" required value="<?php echo htmlspecialchars(@$_POST['email']);?>"><br/><br/>
 
     <label for="password">New Password</label><br/>
-    <input type="password" name="password" id="password" required value=""><br/><br/>
+    <input type="password" name="heslo" id="heslo" required value=""><br/><br/>
 
     <input type="submit" value="Create Account"> or <a href="index.php">Cancel</a>
 </form>

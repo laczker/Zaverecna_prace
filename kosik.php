@@ -42,21 +42,22 @@ if (!empty($goods)){
                 <thead>
                   <tr>
                     <th></th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Description</th>
+                    <th>Název</th>
+                    <th>Počet kusů</th>
+                    <th>Cena</th>
+                    <th>Popis</th>
                   </tr>
                 </thead>
                 <tbody>';
     foreach ($goods as $good){
         echo '  <tr>
                     <td class="center">
-                      <a href="odeber.php?produkt_id='.$good['produkt_id'].'">Remove</a>
+                      <a href="odeber.php?produkt_id='.$good['produkt_id'].'">Odebrat</a>
                     </td>
                     <td>'.htmlspecialchars($good['nazev']).'</td>
                     <td class="right">'.$good['cena'].'</td>
                     <td>'.htmlspecialchars($good['popis']).'</td>
-                  </tr>';
+               </tr>';
         $sum+=$good['cena'];
     }
     echo '  </tbody>
