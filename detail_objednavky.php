@@ -9,6 +9,10 @@ if (isset($_GET['id'])) {
    $stmt->execute();
    $objednavka = $stmt->fetch(PDO::FETCH_ASSOC);
 
+   if ($objednavka['id_uzivatel'] != $currentUser['uzivatel_id']) {
+      header("location: index.php");
+   }
+
 
    $stmt = $db->prepare("SELECT * FROM produkt join polozka_objednavky using(produkt_id) where objednavka_id = ? ");
    $stmt->bindValue(1, $objednavka['id']);
