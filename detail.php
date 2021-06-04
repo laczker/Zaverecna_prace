@@ -1,5 +1,6 @@
 <?php
 require 'db.php';
+require 'overeni_uzivatele.php';
 
 
 
@@ -77,5 +78,35 @@ $parametry = $goods['parametry'];
             </tr>
         <? endif; ?>
         <table />
+
+
+        <?php
+
+        if (isset($_POST['telo_komentare'])) {
+            $stmt = $db->prepare('INSERT INTO komentar (uzivatel_id, produkt_id, text) VALUES (?, ?, ?)');
+            $stmt->bindValue(1, $currentUser['uzivatel_id']);
+            $stmt->bindValue(2, $goods['produkt_id']);
+            $stmt->bindValue(3, htmlspecialchars($_POST['telo_komentare'], ENT_QUOTES));
+            $stmt->execute();
+        }
+
+        $stmt = $db->prepare('SELECT * FROM komentar join uzivatel using(uzivatel_id) WHERE produkt_id = ?');
+        $stmt->bindValue(1, $goods['produkt_id']);
+        $stmt->execute();
+        $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+        <h2>Komentáře</h2>
+        <ul>
+            <?php if (!empty($comments)) : ?>
+                <?php foreach ($comments as $comment) : ?>
+                    <li><?= $comment['text'] ?> (<small><?= $comment['email'] ?></small>) <?= $comment['datum'] ?></li>
+                <?php endforeach; ?>
+            <?php endif ?>
+        </ul>
+        <p>Přidat komentář</p>
+        <form method="POST">
+            <textarea name="telo_komentare" id="telo_komentare" cols="30" rows="10"></textarea>
+            <input type="submit" value="Okomentovat">
+        </form>
 
 </html>
