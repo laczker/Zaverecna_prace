@@ -3,6 +3,7 @@
 
         <a href="index.php">Výběr produktů</a> |
         <a href="kosik.php">Můj košík</a>
+        <a href="objednavky.php">Moje objednavky</a>
 
     </div>
     <div style="float: right">
